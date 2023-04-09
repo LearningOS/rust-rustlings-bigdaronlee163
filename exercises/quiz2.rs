@@ -18,8 +18,6 @@
 // - The output element is going to be a Vector of strings.
 // No hints this time!
 
-// I AM NOT DONE
-
 pub enum Command {
     Uppercase,
     Trim,
@@ -30,21 +28,43 @@ mod my_module {
     use super::Command;
 
     // TODO: Complete the function signature!
-    pub fn transformer(input: ???) -> ??? {
+    pub fn transformer(input: Vec<(String, Command)>) -> Vec<String> {
         // TODO: Complete the output declaration!
-        let mut output: ??? = vec![];
+        let mut output: Vec<String> = vec![];
         for (string, command) in input.iter() {
             // TODO: Complete the function body. You can do it!
+            match command {
+                Command::Uppercase => output.push(string.to_uppercase().into()),
+                Command::Trim => output.push(string.trim().into()),
+                Command::Append(size) => {
+                    let mut tmpStr = String::from(string);
+                    for _i in 0..*size {
+                        tmpStr.push_str("bar")
+                    }
+                    output.push(tmpStr);
+                }
+            }
         }
         output
+
+        // // another solution
+        // for (string, command) in input.iter() {
+        //     let to_push = match command {
+        //         Command::Uppercase => String::from(string).to_uppercase(),
+        //         Command::Trim => String::from(string.trim()),
+        //         Command::Append(size) => string.to_owned() + &"bar".repeat(*size)[..],
+        //     };
+        //     output.push(to_push);
+        // }
+        // output
     }
 }
 
 #[cfg(test)]
 mod tests {
     // TODO: What do we have to import to have `transformer` in scope?
-    use ???;
     use super::Command;
+    use my_module::transformer;
 
     #[test]
     fn it_works() {
@@ -54,6 +74,10 @@ mod tests {
             ("foo".into(), Command::Append(1)),
             ("bar".into(), Command::Append(5)),
         ]);
+        println!("{}", output[0]);
+        println!("{}", output[1]);
+        println!("{}", output[2]);
+        println!("{}", output[3]);
         assert_eq!(output[0], "HELLO");
         assert_eq!(output[1], "all roads lead to rome!");
         assert_eq!(output[2], "foobar");
