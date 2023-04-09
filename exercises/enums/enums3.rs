@@ -2,10 +2,17 @@
 // Address all the TODOs to make the tests pass!
 // Execute `rustlings hint enums3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 enum Message {
     // TODO: implement the message variant types based on their usage below
+    Quit,
+    Echo(String),
+    // Move { x: u8, y: u8 },
+    Move(Point),
+    ChangeColor((u8, u8, u8)), // 这里要注意添加括号，保证三个数是一个元组或者，元组结构体来处理的。此处应该是元组，因为元组结构体是有名字的。
+                               // 也可以放开这个括号，不过下面的也需要做响应的调整。
+                               // 1. 赋值的时候。
+                               // 2. 值绑定的时候。
+                               // 3. 入参的时候，需要手动组成元组。
 }
 
 struct Point {
@@ -38,6 +45,12 @@ impl State {
 
     fn process(&mut self, message: Message) {
         // TODO: create a match expression to process the different message variants
+        match message {
+            Message::ChangeColor(color) => self.change_color(color), // 使用（）来组成元组。 前面是相当于解构？
+            Message::Echo(echoStr) => self.echo(echoStr),
+            Message::Move(pos) => self.move_position(pos),
+            Message::Quit => self.quit(),
+        }
     }
 }
 

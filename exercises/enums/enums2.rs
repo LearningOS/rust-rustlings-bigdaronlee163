@@ -1,11 +1,15 @@
 // enums2.rs
 // Execute `rustlings hint enums2` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
 
 #[derive(Debug)]
 enum Message {
-    // TODO: define the different variants used below
+    // TODO: define a few types of messages as used below
+    Quit,
+    Echo(String),
+    Move { x: u8, y: u8 },
+    ChangeColor(u8, u8, u8),
+    Unit {},
 }
 
 impl Message {
@@ -20,6 +24,7 @@ fn main() {
         Message::Echo(String::from("hello world")),
         Message::ChangeColor(200, 255, 255),
         Message::Quit,
+        Message::Unit {},
     ];
 
     for message in &messages {
