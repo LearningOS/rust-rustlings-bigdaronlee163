@@ -3,18 +3,17 @@
 // will be modelled using a hash map. The name of the exercise is the key and
 // the progress is the value. Two counting functions were created to count the
 // number of exercises with a given progress. These counting functions use
-// imperative style for loops. Recreate this counting functionality using
+// imperative style for loops style for loops. Recreate this counting functionality using
 // iterators. Only the two iterator methods (count_iterator and
 // count_collection_iterator) need to be modified.
 // Execute `rustlings hint iterators5` or use the `hint` watch subcommand for a hint.
 //
 // Make the code compile and the tests pass.
 
-// I AM NOT DONE
 
 use std::collections::HashMap;
 
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
 enum Progress {
     None,
     Some,
@@ -34,14 +33,39 @@ fn count_for(map: &HashMap<String, Progress>, value: Progress) -> usize {
 fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
     // map is a hashmap with String keys and Progress values.
     // map = { "variables1": Complete, "from_str": None, ... }
-    todo!();
+    // todo!();
+    // let iter = map.iter();
+    let mut count: usize = 0;
+    // map.into_iter().map(|v| {
+    //     // if  ==  {
+
+    //     // }
+    //     match v.1 {
+    //         &value => count += 1,
+    //         _ => count += 0,
+    //     }
+    // });
+    // println!("DDD1 {:?}", map);
+    // map.values().into_iter().map(|v| {
+    //     println!("Progress is : {:?}, 参数是{:?}", v, value);
+    //     if *v == value {
+    //         println!("Progress is : {:?}", v);
+    //         count += 1;
+    //         println!("DDD {}", count);
+    //     }
+    // }).count();
+    // println!("DDD {}", count);
+    // count
+
+    map.values().filter(|&val| *val == value).count()
 }
 
 fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
     let mut count = 0;
     for map in collection {
         for val in map.values() {
-            if val == &value {
+            // println!("Progress is : {:?}", val);
+            if *val == value {
                 count += 1;
             }
         }
@@ -53,7 +77,25 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
     // collection is a slice of hashmaps.
     // collection = [{ "variables1": Complete, "from_str": None, ... },
     //     { "variables2": Complete, ... }, ... ]
-    todo!();
+    // let mut count: usize = 0;
+    // collection.into_iter().map(|m| {
+    //     let mut tmpCount = 0;
+    //     m.values().into_iter().map(|v| {
+    //         if v == &value {
+    //             tmpCount += 1;
+    //         }
+    //     });
+    //     count = tmpCount;
+    // }).count();
+    // count
+
+    // solution 2
+    // collection.iter().map(|x| count_iterator(x, value)).sum()
+
+    collection
+        .iter()
+        .map(|map| map.values().filter(|&val| *val == value).count())
+        .sum()
 }
 
 #[cfg(test)]
